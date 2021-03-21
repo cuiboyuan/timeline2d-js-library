@@ -1,7 +1,8 @@
 'use strict'
 
 function EventTime(year, month, date, hour, minute, second){
-    this.eventTime = [year || -1, month || -1, date || -1, hour || -1, minute || -1, second || -1];
+    this.eventTime = new Date(year, month, date, hour, minute, second);
+    // this.eventTime = [year || -1, month || -1, date || -1, hour || -1, minute || -1, second || -1];
 }
 
 EventTime.prototype = {
@@ -16,6 +17,7 @@ EventTime.prototype = {
         return value;
     },
     getFirstDefinedTime: function (){
+        return this.eventTime.getFullYear();
         for (let i = 0; i < this.eventTime.length; i++){
             if (this.eventTime[i] !== -1){
                 return this.eventTime[i];
@@ -24,6 +26,7 @@ EventTime.prototype = {
         return undefined;
     },
     getTimeString: function() {
+        return this.eventTime.toLocaleDateString();
         let date = '';
         for (let i = 0; i < 3; i++){
             let timeVal = this.eventTime[i];
@@ -55,7 +58,19 @@ EventTime.prototype = {
 };
 
 function getInterval (timeA, timeB) {
-    return timeB.getValue() - timeA.getValue();
+    return timeB - timeA;
+}
+
+function valueToEventTime (timeVal) {
+    let times = []
+    for (let i = 6; i > 0; i--){
+        const timePartial = Math.floor(timeVal / 100**i);
+        times.push(timePartial);
+        timeVal -= timePartial * 100 ** i;
+    }
+    let eventTime = new EventTime();
+    eventTime.eventTime = times;
+    return eventTime;
 }
 
 function TimelineEvent (title, description, category, time) {
@@ -67,7 +82,7 @@ function TimelineEvent (title, description, category, time) {
 
 TimelineEvent.prototype = {
     getTime: function() {
-        return this.time.getTimeString();
+        return this.time.toLocaleDateString();
     }
 }
 
@@ -83,11 +98,13 @@ function Timeline2D () {
 
     this.unitTime = undefined;
 
+    this.scaleUnit = undefined;
+
 }
 
 /* Styling parameters for timeline */
 
-const flowWidth = 20; 
+const flowWidth = 30; 
 const arrowWidth = flowWidth * 2; 
 
 const catNamePadding = 10; 
@@ -115,13 +132,13 @@ Timeline2D.prototype = {
 
     addTimelineEvent: function(title, description, category, year, month, date, hour, minute, second){
 
-        const time = new EventTime(year, month, date, hour, minute, second);
+        const time = new Date(year, month, date, hour, minute, second);
         const event = new TimelineEvent(title, description, category, time);
-        if (!this.timeMin || (getInterval(this.timeMin, time) < 0)){
+        if (!this.timeMin || time < this.timeMin)){
             this.timeMin = time;
         }
 
-        if (!this.timeMax || (getInterval(time, this.timeMax) < 0)){
+        if (!this.timeMax || time > this.timeMax){
             this.timeMax = time;
         } 
 
@@ -137,10 +154,23 @@ Timeline2D.prototype = {
         return colors[idx];
     },
 
+    getTimeScales: function () {
+        let scales = []
+        
+        let partialMax = this.renderMin;
+        while (partialMax <= this.renderMax){
+            scales.push(partialMax);
+            partialMax += this.scaleUnit;
+        }
+        
+        return scales;
+    },
+
     createZoomedTimeline: function(length, renderMin, renderMax){
         const timeline = document.createElement('div');
         timeline.classList.add('timeline2d')
         
+        // Determine which category stays above/below the timeline
         let above = [];
         let below = [];
         
@@ -152,11 +182,13 @@ Timeline2D.prototype = {
             }
         }
         
+        // Parameter for formating
         const aboveHeight = above.length * categoryWidth;
         const belowHeight = below.length * categoryWidth;
 
         timeline.style.height = `${aboveHeight + belowHeight + flowWidth}px`
 
+        // Add each event to the timeline
         this.events.forEach(
             (item) => {
                 if (item.time.getValue() < renderMin || item.time.getValue() > renderMax){
@@ -166,7 +198,7 @@ Timeline2D.prototype = {
                 // Calculate where should the event be placed on the time flow
                 // based on its time
                 const total = renderMax - renderMin;
-                const fraction = total ? (item.time.getValue() - renderMin) / total : 0
+                const fraction = total ? (item.time - renderMin) / total : 0
                 const toLeft = (length - dotWidth) * fraction + startX;
                 
                 // Calculate the position based on its category
@@ -177,6 +209,7 @@ Timeline2D.prototype = {
                     lineHeight = categoryWidth * below.indexOf(item.category) + eventCategoryOffset;
                 }
 
+                // The event is graphically represented by a dot and a line which connect to the timeline
                 const event = document.createElement('div');
                 event.classList.add('overlay');
 
@@ -186,8 +219,10 @@ Timeline2D.prototype = {
                 const line = document.createElement('div')
                 line.classList.add('eventLine')
 
+                // A hidden event title above (or below) the dot which only become visible when the mouse hovers
+                // over the dot
                 const title = document.createElement('div')
-                title.innerText = `${item.time.getFirstDefinedTime()}, ${item.title}`
+                title.innerText = `${item.time.getFullYear()}, ${item.title}`
                 title.classList.add('eventTitle')
 
                 dot.addEventListener('mouseenter', (e) => {
@@ -198,6 +233,7 @@ Timeline2D.prototype = {
                     title.style.visibility = 'hidden';
                 })
 
+                // Show a box containing information of the event when the dot is clicked
                 dot.addEventListener('click', e => {
                     const existingBox = timeline.querySelector('.eventBox');
                     if (existingBox) {
@@ -254,34 +290,39 @@ Timeline2D.prototype = {
                     timeline.appendChild(eventBox);
                 })
 
+                // The dot and line representing the event is placed on the timeline
+                // w.r.t. its time
                 event.style.left = `${toLeft}px`;
-
-                dot.style.backgroundColor = this.getColor(item.category);
-                line.style.backgroundColor = this.getColor(item.category);
-                
                 title.style.left = `${toLeft}px`;
 
+                // Give a color to the event based on its category
+                dot.style.backgroundColor = this.getColor(item.category);
+                line.style.backgroundColor = this.getColor(item.category);
+
+                // Add the events above or below the timeline based on its category
                 if (above.includes(item.category)){
                     line.style.height = `${lineHeight}px`
 
                     event.style.bottom = `${belowHeight + flowWidth}px`
-
                     title.style.bottom = `${belowHeight + flowWidth + lineHeight + dotWidth + dotTitlePadding}px`;
-                    title.style.zIndex = `${above.length - above.indexOf(item.category)}`
 
                     event.appendChild(dot)
                     event.appendChild(line)
+
+                    // Ensure that events near the timeline is rendered above events that are further
+                    title.style.zIndex = `${above.length - above.indexOf(item.category)}`
                     event.style.zIndex = `${above.length - above.indexOf(item.category)}`
                 } else {
                     line.style.height = `${lineHeight}px`
 
                     event.style.top = `${aboveHeight + flowWidth}px`
-
                     title.style.top = `${aboveHeight + flowWidth + lineHeight + dotWidth + dotTitlePadding}px`;
-                    title.style.zIndex = `${below.length - below.indexOf(item.category)}`
 
                     event.appendChild(line) 
                     event.appendChild(dot)
+                    
+                    // Ensure that events near the timeline is rendered above events that are further
+                    title.style.zIndex = `${below.length - below.indexOf(item.category)}`
                     event.style.zIndex = `${below.length - below.indexOf(item.category)}`
                 }
         
@@ -309,6 +350,29 @@ Timeline2D.prototype = {
             }
         );
 
+        // Add time scale on the timeflow arrow
+        // const scaleNum = 5;
+        // this.scaleUnit = this.timeMax / scaleNum;
+
+        // const scaleWidth = 50;
+        // const scales = this.getTimeScales();
+        // scales.forEach(timeVal =>{
+        //     const scalesLength = this.renderMax - this.renderMin;
+        //     const scaleFraction = scalesLength ? ((timeVal - this.renderMin) / scalesLength) : 0;
+
+        //     const timeScale = document.createElement('div');
+        //     timeScale.classList.add('timelineScale');
+        //     timeScale.style.height = `${flowWidth}px`;
+        //     timeScale.style.width = `${scaleWidth}px`;
+        //     timeScale.style.left = `${scaleFraction * length + startX}px`;
+        //     timeScale.style.top = `${aboveHeight}px`
+        //     timeScale.style.zIndex = `${this.events.length + 1}`;
+
+        //     const timeString = valueToEventTime(timeVal).getTimeString();
+        //     timeScale.innerText = timeString;
+        //     timeline.appendChild(timeScale);
+        // });
+
         // create canvas to draw the timeflow arrow
         const timeflow = document.createElement('canvas');
         timeflow.width = length + arrowLength + startX;
@@ -332,15 +396,22 @@ Timeline2D.prototype = {
         // Put timeflow arrow into the timeline
         timeline.appendChild(timeflow);
 
-        // Add time scale on the timeflow arrow
-
         
         return timeline;
     },
 
     render: function(rendetAt, length) {
         
-        const timeline = this.createZoomedTimeline(length, this.timeMin.getValue(), this.timeMax.getValue());
+        // Parameters for zooming
+        const zoomDepth = 20;
+
+        const zoomUnit = (this.timeMax - this.timeMin) / zoomDepth;
+        this.renderMin = this.timeMin;
+        this.renderMax = this.timeMax;
+        this.unitTime = zoomUnit;
+
+
+        const timeline = this.createZoomedTimeline(length, this.timeMin, this.timeMax);
 
         /* Wrapper for timeline and the panel */
         const wrapper = document.createElement('div');
@@ -353,13 +424,6 @@ Timeline2D.prototype = {
         const panel = document.createElement('div');
         panel.classList.add('timelinePanel');
 
-        // Parameters for zooming
-        const zoomDepth = 10;
-        this.renderMin = this.timeMin.getValue();
-        this.renderMax = this.timeMax.getValue();
-
-        const zoomUnit = getInterval(this.timeMin, this.timeMax) / (2*zoomDepth + 1);
-        this.unitTime = zoomUnit;
 
         // Button to zoom in
         const zoomIn = document.createElement('button');
@@ -367,24 +431,27 @@ Timeline2D.prototype = {
         zoomIn.innerText = 'Zoom In';
 
         zoomIn.addEventListener('click', e => {
+
             const oldTimeline = wrapper.querySelector('.timeline2d');
-            this.renderMin += zoomUnit;
-            this.renderMax -= zoomUnit;
+            this.renderMin += zoomUnit/2;
+            this.renderMax -= zoomUnit/2;
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
-            wrapper.replaceChild(zoomedTimeline, oldTimeline)
-            
+            wrapper.replaceChild(zoomedTimeline, oldTimeline);
+
             if ((this.renderMax - this.renderMin) <= zoomUnit){
                 zoomIn.disabled = true;
             } else {
                 zoomIn.disabled = false;
             }
             
-            if ((this.renderMax >= this.timeMax.getValue()) && (this.renderMin <= this.timeMin.getValue())){
+            if ((this.renderMax >= this.timeMax && (this.renderMin <= this.timeMin){
                 zoomOut.disabled = true;
             } else {
                 zoomOut.disabled = false;
             }
+
             this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
+            console.log(this.renderMin, this.renderMax);
         });
         
         // Button to zoom out
@@ -393,27 +460,29 @@ Timeline2D.prototype = {
         zoomOut.innerText = 'Zoom Out';
 
         zoomOut.addEventListener('click', e => {
+
             const oldTimeline = wrapper.querySelector('.timeline2d');
-            if (this.renderMin > this.timeMin.getValue()){
-                this.renderMin -= zoomUnit;
+            if (this.renderMin > this.timeMin){
+                this.renderMin -= zoomUnit/2;
             }
-            if (this.renderMax < this.timeMax.getValue()){
-                this.renderMax += zoomUnit;
+            if (this.renderMax < this.timeMax){
+                this.renderMax += zoomUnit/2;
             }
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
-            wrapper.replaceChild(zoomedTimeline, oldTimeline)
-            
+            wrapper.replaceChild(zoomedTimeline, oldTimeline);
+
             if ((this.renderMax - this.renderMin) <= zoomUnit){
                 zoomIn.disabled = true;
             } else {
                 zoomIn.disabled = false;
             }
             
-            if ((this.renderMax >= this.timeMax.getValue()) && (this.renderMin <= this.timeMin.getValue())){
+            if ((this.renderMax >= this.timeMax) && (this.renderMin <= this.timeMin)){
                 zoomOut.disabled = true;
             } else {
                 zoomOut.disabled = false;
             }
+            
             this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
         });
 
@@ -427,7 +496,7 @@ Timeline2D.prototype = {
 
         prev.addEventListener('click', e => {
             const oldTimeline = wrapper.querySelector('.timeline2d');
-            if (this.renderMin > this.timeMin.getValue()){
+            if (this.renderMin > this.timeMin){
                 this.renderMin -= this.unitTime;
                 this.renderMax -= this.unitTime;
             }
@@ -443,7 +512,7 @@ Timeline2D.prototype = {
 
         next.addEventListener('click', e => {
             const oldTimeline = wrapper.querySelector('.timeline2d');
-            if (this.renderMax < this.timeMax.getValue()){
+            if (this.renderMax < this.timeMax){
                 this.renderMin += this.unitTime;
                 this.renderMax += this.unitTime;
             }

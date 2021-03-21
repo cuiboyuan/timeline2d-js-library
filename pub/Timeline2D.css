@@ -69,3 +69,8 @@
     position: relative;
     margin: 10px;
 }
+
+.timelineScale{
+    position: absolute;
+    color: whitesmoke;
+}
