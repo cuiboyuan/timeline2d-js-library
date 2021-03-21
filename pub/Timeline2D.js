@@ -78,8 +78,38 @@ function Timeline2D () {
     this.events = [];
     this.categories = [];
 
+    this.renderMax = undefined;
+    this.renderMin = undefined;
+
+    this.unitTime = undefined;
+
 }
 
+/* Styling parameters for timeline */
+
+const flowWidth = 20; 
+const arrowWidth = flowWidth * 2; 
+
+const catNamePadding = 10; 
+const catNameWidth = 100;
+const catNameHeight = 20;
+
+const titleHeight = 50;
+const timeHeight = 30;
+const descriptionHeight = 100;
+const boxHeight = titleHeight + timeHeight + catNameHeight + descriptionHeight;
+
+const startX = catNamePadding * 2 + catNameWidth + 5;
+const startY = (arrowWidth - flowWidth)/2;
+const arrowLength = 50;
+
+const circleRadius = 20;
+
+const categoryWidth = 70;
+const eventCategoryOffset = 20;
+const dotWidth = 20;
+
+const dotTitlePadding = 10;
 
 Timeline2D.prototype = {
 
@@ -107,35 +137,9 @@ Timeline2D.prototype = {
         return colors[idx];
     },
 
-    render: function(rendetAt, length) {
-        
+    createZoomedTimeline: function(length, renderMin, renderMax){
         const timeline = document.createElement('div');
         timeline.classList.add('timeline2d')
-
-        const flowWidth = 20;
-        const arrowWidth = flowWidth * 2;
-
-        const catNamePadding = 10;
-        const catNameWidth = 100;
-        const catNameHeight = 20;
-
-        const titleHeight = 50;
-        const timeHeight = 30;
-        const descriptionHeight = 100;
-        const boxHeight = titleHeight + timeHeight + catNameHeight + descriptionHeight;
-
-        const startX = catNamePadding * 2 + catNameWidth + 5;
-        const startY = (arrowWidth - flowWidth)/2;
-        const arrowLength = 50;
-
-        const circleRadius = 20;
-
-        const categoryWidth = 60;
-        const eventCategoryOffset = 20;
-        const dotWidth = 20;
-
-        const dotTitlePadding = 10;
-
         
         let above = [];
         let below = [];
@@ -155,10 +159,14 @@ Timeline2D.prototype = {
 
         this.events.forEach(
             (item) => {
+                if (item.time.getValue() < renderMin || item.time.getValue() > renderMax){
+                    return;
+                }
+
                 // Calculate where should the event be placed on the time flow
                 // based on its time
-                const total = getInterval(this.timeMin, this.timeMax);
-                const fraction = total ? getInterval(this.timeMin, item.time) / total : 0
+                const total = renderMax - renderMin;
+                const fraction = total ? (item.time.getValue() - renderMin) / total : 0
                 const toLeft = (length - dotWidth) * fraction + startX;
                 
                 // Calculate the position based on its category
@@ -324,8 +332,140 @@ Timeline2D.prototype = {
         // Put timeflow arrow into the timeline
         timeline.appendChild(timeflow);
 
+        // Add time scale on the timeflow arrow
+
+        
+        return timeline;
+    },
+
+    render: function(rendetAt, length) {
+        
+        const timeline = this.createZoomedTimeline(length, this.timeMin.getValue(), this.timeMax.getValue());
+
+        /* Wrapper for timeline and the panel */
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('timelineWrapper');
+
+        // Add timeline to the wrapper for rendering
+        wrapper.appendChild(timeline);
+
+        /* The panel for zooming and moving the timeline */
+        const panel = document.createElement('div');
+        panel.classList.add('timelinePanel');
+
+        // Parameters for zooming
+        const zoomDepth = 10;
+        this.renderMin = this.timeMin.getValue();
+        this.renderMax = this.timeMax.getValue();
+
+        const zoomUnit = getInterval(this.timeMin, this.timeMax) / (2*zoomDepth + 1);
+        this.unitTime = zoomUnit;
+
+        // Button to zoom in
+        const zoomIn = document.createElement('button');
+        zoomIn.classList.add('timelineZoom');
+        zoomIn.innerText = 'Zoom In';
+
+        zoomIn.addEventListener('click', e => {
+            const oldTimeline = wrapper.querySelector('.timeline2d');
+            this.renderMin += zoomUnit;
+            this.renderMax -= zoomUnit;
+            const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
+            wrapper.replaceChild(zoomedTimeline, oldTimeline)
+            
+            if ((this.renderMax - this.renderMin) <= zoomUnit){
+                zoomIn.disabled = true;
+            } else {
+                zoomIn.disabled = false;
+            }
+            
+            if ((this.renderMax >= this.timeMax.getValue()) && (this.renderMin <= this.timeMin.getValue())){
+                zoomOut.disabled = true;
+            } else {
+                zoomOut.disabled = false;
+            }
+            this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
+        });
+        
+        // Button to zoom out
+        const zoomOut = document.createElement('button');
+        zoomOut.classList.add('timelineZoom');
+        zoomOut.innerText = 'Zoom Out';
+
+        zoomOut.addEventListener('click', e => {
+            const oldTimeline = wrapper.querySelector('.timeline2d');
+            if (this.renderMin > this.timeMin.getValue()){
+                this.renderMin -= zoomUnit;
+            }
+            if (this.renderMax < this.timeMax.getValue()){
+                this.renderMax += zoomUnit;
+            }
+            const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
+            wrapper.replaceChild(zoomedTimeline, oldTimeline)
+            
+            if ((this.renderMax - this.renderMin) <= zoomUnit){
+                zoomIn.disabled = true;
+            } else {
+                zoomIn.disabled = false;
+            }
+            
+            if ((this.renderMax >= this.timeMax.getValue()) && (this.renderMin <= this.timeMin.getValue())){
+                zoomOut.disabled = true;
+            } else {
+                zoomOut.disabled = false;
+            }
+            this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
+        });
+
+        zoomIn.disabled = false;
+        zoomOut.disabled = true;
+
+        // Button to move left in the timeline
+        const prev = document.createElement('button');
+        prev.classList.add('timelineMove');
+        prev.innerText = '<';
+
+        prev.addEventListener('click', e => {
+            const oldTimeline = wrapper.querySelector('.timeline2d');
+            if (this.renderMin > this.timeMin.getValue()){
+                this.renderMin -= this.unitTime;
+                this.renderMax -= this.unitTime;
+            }
+            const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
+            wrapper.replaceChild(zoomedTimeline, oldTimeline)
+            
+        });
+        
+        // Button to move right in the timeline
+        const next = document.createElement('button');
+        next.classList.add('timelineZoom');
+        next.innerText = '>';
+
+        next.addEventListener('click', e => {
+            const oldTimeline = wrapper.querySelector('.timeline2d');
+            if (this.renderMax < this.timeMax.getValue()){
+                this.renderMin += this.unitTime;
+                this.renderMax += this.unitTime;
+            }
+            const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
+            wrapper.replaceChild(zoomedTimeline, oldTimeline)
+            
+        });
+
+        // Add the buttons in the panel
+        panel.appendChild(prev);
+        panel.appendChild(zoomIn);
+        panel.appendChild(zoomOut);
+        panel.appendChild(next);
+        
+        // Add the panel to the wrapper
+        wrapper.appendChild(panel);
+
+        // Define the width of the wrapper to be the same as timeline
+        wrapper.style.width = `${startX + length + arrowLength + circleRadius}px`;
+
         // Rendered the entire timeline to the given place
         const where = document.querySelector(rendetAt);
-        where.appendChild(timeline);
+        where.appendChild(wrapper);
     }
 };

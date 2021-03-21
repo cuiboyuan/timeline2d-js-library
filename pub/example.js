@@ -28,15 +28,3 @@ tl.render('body', 800);
 const something = document.createElement('span')
 something.innerHTML = 'something else in the website'
 document.querySelector('body').appendChild(something);
-
-// const tl2 = new Timeline2D();
-
-// tl2.addTimelineEvent('Birth', 'Born in San Francisco, California', jobs, 1955, 2, 24);
-// tl2.addTimelineEvent('College', 'Enrolled at Reed College', jobs, 1972, 9);
-// tl2.addTimelineEvent('Drop out', 'Dropped out after one semester', jobs, 1973, 1);
-// tl2.addTimelineEvent('Founded Apple', 'Co-founded with Steve Wozniak and Ronald Wayne in Cupertino, California', jobs, 1976, 4);
-// tl2.addTimelineEvent('Death', 'Died at Palo Alto, California', jobs, 2011, 10, 5, 15);
-
-
-
-// tl2.render('body', 500);

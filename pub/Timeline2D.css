@@ -48,7 +48,6 @@
 }
 .timeline2d {
     position: relative;
-    margin: 10px;
 }
 .timeline2d .overlay {
     position: absolute;
@@ -56,4 +55,17 @@
 
 .timeline2d canvas {
     position: absolute;
+}
+
+.timelinePanel {
+    height: fit-content;
+    width: fit-content;
+    background-color: lightgray;
+    position: relative;
+    margin: auto;
+}
+
+.timelineWrapper {
+    position: relative;
+    margin: 10px;
 }
