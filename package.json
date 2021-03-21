@@ -1,16 +1,24 @@
 {
-    "name": "exress_server",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "express": "^4.16.4"
-    }
-  }
-  
+  "name": "timeline2d",
+  "version": "1.0.0",
+  "description": "A JS library that allows developers to create a 2D timelines in the web page.",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-winter-2021/js-library-cuiboyu1.git"
+  },
+  "author": "Boyuan Cui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-winter-2021/js-library-cuiboyu1/issues"
+  },
+  "homepage": "https://github.com/csc309-winter-2021/js-library-cuiboyu1#readme"
+}
