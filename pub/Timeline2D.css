@@ -65,6 +65,10 @@
     margin: auto;
 }
 
+.timelineZoom, .timelineMove {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .timelineWrapper {
     position: relative;
     margin: 10px;

@@ -97,7 +97,6 @@ Timeline2D.prototype = {
             scales.push(partialMax);
             partialMax = new Date(partialMax.valueOf() + this.scaleUnit);
         }
-        console.log(scales)
         return scales;
     },
 
@@ -355,6 +354,33 @@ Timeline2D.prototype = {
         const panel = document.createElement('div');
         panel.classList.add('timelinePanel');
 
+        const panelRefresh = () => {
+            
+            if ((this.renderMax - this.renderMin) <= zoomUnit){
+                zoomIn.disabled = true;
+            } else {
+                zoomIn.disabled = false;
+            }
+            
+            if ((this.renderMax >= this.timeMax) && (this.renderMin <= this.timeMin)){
+                zoomOut.disabled = true;
+            } else {
+                zoomOut.disabled = false;
+            }
+
+            if (this.renderMax < this.timeMax){
+                next.disabled = false;
+            } else {
+                next.disabled = true;
+            }
+            
+            if (this.renderMin > this.timeMin){
+                prev.disabled = false;
+            } else {
+                prev.disabled = true;
+            }
+        };
+
         // Button to zoom in
         const zoomIn = document.createElement('button');
         zoomIn.classList.add('timelineZoom');
@@ -368,20 +394,9 @@ Timeline2D.prototype = {
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
             wrapper.replaceChild(zoomedTimeline, oldTimeline);
 
-            if ((this.renderMax - this.renderMin) <= zoomUnit){
-                zoomIn.disabled = true;
-            } else {
-                zoomIn.disabled = false;
-            }
-            
-            if ((this.renderMax >= this.timeMax) && (this.renderMin <= this.timeMin)){
-                zoomOut.disabled = true;
-            } else {
-                zoomOut.disabled = false;
-            }
+            panelRefresh();
 
             this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
-            console.log(this.renderMin, this.renderMax);
         });
         
         // Button to zoom out
@@ -401,23 +416,10 @@ Timeline2D.prototype = {
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
             wrapper.replaceChild(zoomedTimeline, oldTimeline);
 
-            if ((this.renderMax - this.renderMin) <= zoomUnit){
-                zoomIn.disabled = true;
-            } else {
-                zoomIn.disabled = false;
-            }
-            
-            if ((this.renderMax >= this.timeMax) && (this.renderMin <= this.timeMin)){
-                zoomOut.disabled = true;
-            } else {
-                zoomOut.disabled = false;
-            }
+            panelRefresh();
             
             this.unitTime = (this.renderMax - this.renderMin) / (2*zoomDepth + 1);
         });
-
-        zoomIn.disabled = false;
-        zoomOut.disabled = true;
 
         // Button to move left in the timeline
         const prev = document.createElement('button');
@@ -433,6 +435,7 @@ Timeline2D.prototype = {
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
             wrapper.replaceChild(zoomedTimeline, oldTimeline)
             
+            panelRefresh();
         });
         
         // Button to move right in the timeline
@@ -449,7 +452,10 @@ Timeline2D.prototype = {
             const zoomedTimeline = this.createZoomedTimeline(length, this.renderMin, this.renderMax);
             wrapper.replaceChild(zoomedTimeline, oldTimeline)
             
+            panelRefresh();
         });
+
+        panelRefresh();
 
         // Add the buttons in the panel
         panel.appendChild(prev);
