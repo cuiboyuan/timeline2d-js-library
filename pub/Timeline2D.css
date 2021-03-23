@@ -63,6 +63,7 @@
     background-color: lightgray;
     position: relative;
     margin: auto;
+    bottom: 0px;
 }
 
 .timelineZoom, .timelineMove {
@@ -78,4 +79,5 @@
     position: absolute;
     color: whitesmoke;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
 }
