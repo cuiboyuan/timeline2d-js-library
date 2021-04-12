@@ -1,3 +1,137 @@
+"use strict";
+
+const flowColor = 'lightblue'
+const strokeColor = 'grey'
+
+const radius = 19;
+const rectWidth = 29
+const rectLength = 1100
+const topOffset = radius - rectWidth/2
+const arrowHeight = 40
+const arrowLength = 60
+
+
+const demo = document.querySelector('#demo');
+const aes = document.querySelector('#aesFix');
+
+const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+
+circle.setAttribute('cx', radius)
+circle.setAttribute('cy', radius)
+circle.setAttribute('r', radius)
+circle.setAttribute('fill', flowColor)
+
+aes.appendChild(circle)
+
+const timeflow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+
+demo.style.height = `${arrowHeight > 2*radius ? arrowHeight : 2*radius}px`;
+aes.style.height = `${arrowHeight > 2*radius ? arrowHeight : 2*radius}px`;
+
+const rect1 = `${radius},${topOffset}`
+const rect2 = `${radius + rectLength},${topOffset}`
+
+const arrow1 = `${radius + rectLength},${topOffset - (arrowHeight - rectWidth)/2}`
+const arrow2 = `${radius + rectLength + arrowLength},${topOffset + (rectWidth)/2}`
+const arrow3 = `${radius + rectLength},${topOffset + (arrowHeight) - (arrowHeight - rectWidth)/2}`
+
+const rect3 = `${radius + rectLength},${topOffset + rectWidth}`
+const rect4 = `${radius},${topOffset + rectWidth}`
+
+timeflow.setAttribute('points', `${rect1} ${rect2} ${arrow1} ${arrow2} ${arrow3} ${rect3} ${rect4}`)
+timeflow.setAttribute('fill', flowColor)
+
+demo.appendChild(timeflow)
+
+const aesFix = (x) => {
+    const rectA = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const aesWidth = 60
+
+    rectA.setAttribute('width', aesWidth)
+    rectA.setAttribute('height', rectWidth)
+    rectA.setAttribute('y', topOffset)
+    rectA.setAttribute('fill', flowColor)
+
+    rectA.setAttribute('x', x)
+    return rectA;
+}
+
+aes.appendChild(aesFix(380))
+aes.appendChild(aesFix(600))
+aes.appendChild(aesFix(865))
+aes.appendChild(aesFix(1000))
+
+
+
+
+
+
+const milestone = new Timeline2D();
+
+// Milestones for individual projects
+milestone.addTimelineEvent(
+    'Proposal',
+    '',
+    'Individual Project',
+    '2021-02-27'
+)
+
+milestone.addTimelineEvent(
+    'Alpha Releases',
+    '',
+    'Individual Project',
+    '2021-03-23'
+)
+
+milestone.addTimelineEvent(
+    'Final Submission',
+    '',
+    'Individual Project',
+    '2021-04-17'
+)
+
+// Milestones for group projects
+milestone.addTimelineEvent(
+    'Proposal',
+    '',
+    'Group Project',
+    '2021-02-06'
+)
+
+milestone.addTimelineEvent(
+    'Phase 1 Releases',
+    '',
+    'Group Project',
+    '2021-03-10'
+)
+
+milestone.addTimelineEvent(
+    'Phase 2 Releases',
+    '',
+    'Group Project',
+    '2021-04-09'
+)
+
+milestone.addTimelineEvent(
+    'Final Releases',
+    '',
+    'Group Project',
+    '2021-05-01'
+)
+
+milestone.render('#milestone', 1000)
+
+
+
+
+const history = new Timeline2D();
+
+history.addTimelineEvent(
+    ''
+)
+
+
+
 
 const tl = new Timeline2D();
 
@@ -24,54 +158,3 @@ tl.addTimelineEvent('Founded Tesla','Founded in San Carlos, California',musk,'20
 tl.addTimelineEvent('Founded Neuralink', 'Co-founded in San Francisco',musk, '2016-7')
 
 tl.render('#people', 800);
-
-const tl2 = new Timeline2D();
-const lorem = 'Lorem';
-tl2.addTimelineEvent(
-    'Lorem Ipsum',
-    'Lorem ipsum dolor sit amet, ' +
-    'consectetur adipiscing elit,' +
-    ' sed do eiusmod tempor incididunt' +
-    ' ut labore et dolore magna aliqua.' + 
-    'Ut enim ad minim veniam, quis nostrud '+
-    'exercitation ullamco laboris nisi ut aliquip '+
-    'ex ea commodo consequat. Duis aute irure dolor'+
-    ' in reprehenderit in voluptate velit esse cillum'+
-    ' dolore eu fugiat nulla pariatur. Excepteur sint ' +
-    'occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    lorem,
-    '1970-01-01');
-
-    
-tl2.addTimelineEvent(
-    'Lorem Ipsum',
-    'Lorem ipsum dolor sit amet, ' +
-    'consectetur adipiscing elit,' +
-    ' sed do eiusmod tempor incididunt' +
-    ' ut labore et dolore magna aliqua.' + 
-    'Ut enim ad minim veniam, quis nostrud '+
-    'exercitation ullamco laboris nisi ut aliquip '+
-    'ex ea commodo consequat. Duis aute irure dolor'+
-    ' in reprehenderit in voluptate velit esse cillum'+
-    ' dolore eu fugiat nulla pariatur. Excepteur sint ' +
-    'occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    lorem,
-    '2021-01-01');
-
-    
-tl2.addTimelineEvent(
-    'Lorem Ipsum',
-    'Lorem ipsum dolor sit amet, ' +
-    'consectetur adipiscing elit,' +
-    ' sed do eiusmod tempor incididunt' +
-    ' ut labore et dolore magna aliqua.' + 
-    'Ut enim ad minim veniam, quis nostrud '+
-    'exercitation ullamco laboris nisi ut aliquip '+
-    'ex ea commodo consequat. Duis aute irure dolor'+
-    ' in reprehenderit in voluptate velit esse cillum'+
-    ' dolore eu fugiat nulla pariatur. Excepteur sint ' +
-    'occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    lorem,
-    '2077-01-01');
-
-tl2.render('.example', 1000);
