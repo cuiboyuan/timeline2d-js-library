@@ -7,17 +7,11 @@ The library allows developers to generate a 2-dimensional timeline, where one di
 
 The timeline is fully functional in the alpha release. Different events are scaled by their occurring times. End users can zoom in/out and move long the timeline to different time. End users can also hover over dots which represent events to see the title and occurring time of the event; user can also click on the dots to see more event information. Event information and time will be provided by developers through the library’s interface. Developers can add events and render the timeline to the website with the given API. Different categories are distinguished by the distance between event dots and the timeline, as well as colors.
 
-## Example webpage link:
+## Landing page link:
 https://still-tundra-45710.herokuapp.com
 
+## Getting Started
 
-## API for developers
 
-`new Timeline2D();`
-A constructor that represents the entire timeline and stores information of all events.
-
-`addTimelineEvent(title, description, category, dateString);`
-A function to add an event to the timeline. The event information is given by the argument. The `dateString` argument needs to be the same format to construct a JS Date object, e.g. ‘2021-03-23 15:00’.
-
-`render(renderAt, length);`
-A function to generate all necessary DOM objects to the web page with event information in the timeline. `renderAt` needs to be formatted correctly such that `querySelector()` is able to find the place where the timeline needs to be rendered. length represents how long the developer wants the timeline to be in px.  
+## Documentation link
+https://still-tundra-45710.herokuapp.com/documentation.html
