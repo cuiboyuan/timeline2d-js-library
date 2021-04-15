@@ -2,9 +2,6 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="Timeline2D.css"/>
-        <script defer src="Timeline2D.js"></script>
-
         <link rel="stylesheet" href="example.css"/>
         <script defer src="example.js"></script>
     </head>
@@ -40,194 +37,15 @@
             </div>
             <div id="nav">
                     
-                        <a href="#start"><div>Getting Started</div></a>
+                        <a href="start.html"><div>Getting Started</div></a>
                     
-                        <a href="#examples"><div>Use Cases</div></a>
+                        <a href="use_cases.html"><div>Use Cases</div></a>
 
-                        <a href="#documentation"><div>Documentations</div></a>
+                        <a href="documentation.html"><div>Documentations</div></a>
 
             </div>
         </div>
 
-        <div id="start" class="secondary">Getting Started</div>
-
-        <h2>Load Timeline2D</h2>
-
-        <p>
-            Before anything, you will first need to load the library. There are two files need to be loaded:
-            <strong>Timeline2D.js</strong> (source code file) and <strong>Timeline2D.css</strong> (style sheet file).
-            
-        </p>
-
-        <p>    
-            Load Timeline2D library by putting the following code (order does not matter) inside your html <code>&lt;head&gt;</code> tag (or other similar approaches):
-
-            <code>    
-                <br/>
-                &lt;link rel="stylesheet" href="Timeline2D.css"/&gt; 
-                <br/>
-                &lt;script defer src="Timeline2D.js"&gt;&lt;/script&gt; 
-                <br/>
-            </code>
-
-        </p>
-
-        <h2>Create your first 2D timeline</h2>
-
-        <p>
-            After you have loaded the library, you can create your first timeline by first running the following code:
-
-            <code>    
-                <br/>
-                let timeline = new Timeline2D();
-                <br/>
-            </code>
-
-        </p>
-
-        <p>
-
-            Right now, you won't see any timelines generated on you web page (don't worry!). Variable <code>timeline</code> is an object defined by Timeline2D.js which stores all the information needed to generate 
-            a timeline. The timeline is not generated until you call the function <code>render()</code> on the object <code>timeline</code> as shown below:
-
-            <code>
-                <br/>
-                timeline.render('body', 1000);
-                <br/>
-            </code>
-
-        </p>
-
-        <p>
-
-            Now you should see a light blue arrow on you webpage. The <code>render()</code> function takes in two arguments. The first one indicates where this timeline should be generated. In this case we indicate 
-            that we want the timeline to be generated inside the <code>&lt;body&gt;</code> tag. Timeline2D library uses the function <code>querySelector()</code> on the string to fetch the corresponding DOM element, so you can change 
-            it to other strings (e.g. ".class", "#id") to render the timeline in different places. The second argument represents how long the timeline should be (in pixels). Here we indicate that the time line should be 1000 
-            pixels long.
-
-        </p>
-
-        <p>
-            The current timeline does not do much things as it has no timeline events added to it. So let's regenerate a timeline with some events in it.
-  
-
-            <code>
-                
-                <br/>
-                let timeline = new Timeline2D();
-                
-                <br/>
-                <br/>
-                timeline.addTimelineEvent('First Event', 'This is my first timeline event!!', 'my first category', '2021-04-12');
-                
-                <br/>
-                timeline.addTimelineEvent('Second Event', 'Here is another event', 'my first category', '2021-05-12');
-                
-                <br/>
-                timeline.addTimelineEvent('Third Event', 'Another one but in different category!', 'my second category', '2021-06-12');
-                
-                <br/>
-                <br/>
-                timeline.render('body', 1000);
-                
-                <br/>
-            </code>
-        </p>
-
-        <p>
-            Here we have used function <code>addTimelineEvent()</code> on the object. It takes in 4 arguments. The first one indicates the title of the event. The second
-            one is a longer description of the event. The third one indicates which category this event belongs to. The forth on indicates when does the event happen. The 
-            time format is YYYY-MM-DD. You need to add all events you want to display before you call the <code>render()</code> function. Each event is represented by a dot,
-            and you can click on the dots to view the longer description of the event. Different event category is distinguished by the color of the dot and its distance from 
-            the timeflow arrow. Events of the same category will have the same color and same distance away from the timeflow.
-        </p>
-
-        <p>
-            You can also click on the zoom in/out button and the left/right button to focus on different time periods.
-        </p>
-
-        <p>
-            Now you have created your first 2D timeline! See more about the library on <a href="#documentation">documentation</a>
-
-        </p>
-
-        <div id="examples" class="secondary">Timeline2D Use Cases</div>
-
-        <h2>Project Milestones</h2>
-
-        <p>
-            The first use case of Timeline2D is to mark project milestones. Each event would be an interim milestone, and each category would represent a project. For each event, the user can write more
-            information about the progress he/she has achieved or is planning to accomplish. An example timeline can be built as below:
-        </p>
-
-
-        <div id="milestone">
-
-        </div>
-
-        <p>Below is the code used for this timeline.</p>
-
-        <code>
-
-        </code>
-
-        <p>
-            User can also use this type of timelines for product release schedules. A company may want to use a timeline to illustrate the progress of its product developments and what is plans to release in the future.
-        </p>
-
-
-        
-        <h2>World History</h2>
-
-        <p>
-            Timeline2D can also be used for educational purposes. One of the common subject would be the World History. Normally in class, we study history in a single region first, and then move to another region. However, the history of human kind
-            progresses simultaneously, and sometimes there might be a connection between two entirely different civilizations, which would not be obvious if we only look at one region at a time. Hence, the 2D timeline would be very useful to figuratively 
-            show how hisotry has developed across the world at the same time. In this case, the event could be any historical event, and each category would represent a civilization or region. Below is an example timeline:
-        </p>
-
-
-        <div id="history">
-
-        </div>
-
-        <p>Below is the code used to generate this timeline.</p>
-        
-        <code>
-
-        </code>
-
-        <p>
-            User can also use this type of timelines for product release schedules. A company may want to use a timeline to illustrate the progress of its product developments and what is plans to release in the future.
-        </p>
-
-        <h2>Life Trajectory Comparison</h2>
-
-        <p>
-            Another use case can be life trajectory comparison between different people. If someone wants to write an article about famous people in IT industry, he/she might want to compare the life trajectory of these people in 
-            an illustrative figure. That is where Timeline2D comes into play. Similar to the World History use case, the event would be major events happening in these people's life, and each category would represent each person.
-            Below is an example timeline comparing life trajectory of Steve Jobs, Bill Gates, and Elon Musk:
-        </p>
-        
-        <div id="people">
-        </div>
-
-        <p>
-
-        </p>
-
-        
-        <p>Below is the code used to generate this timeline.</p>
-        
-        <code>
-
-        </code>
-
-        <!-- <h2>Example Timeline with long description:</h2>
-        <div class="example"></div> -->
-
-
-
-        <div id="documentation" class="secondary">Documentation & API</div>
 
     </body>
 </html>

@@ -105,9 +105,12 @@
         
         let partialMax = this.renderMin;
 
+        const scalesLength = this.renderMax - this.renderMin;
+        const scaleUnit = scalesLength / scaleNum;
+
         while (partialMax < this.renderMax){
             scales.push(partialMax);
-            partialMax = new Date(partialMax.valueOf() + this.scaleUnit);
+            partialMax = new Date(partialMax.valueOf() + scaleUnit);
         }
         
         scales.push(partialMax);
@@ -266,7 +269,7 @@
                     eventBox.style.border = `${strokeWidth}px solid ${boxStroke}`
                     
                     const closeButton = document.createElement('div');
-                    closeButton.innerHTML = '<center>X</center>';
+                    closeButton.innerHTML = 'X';
                     closeButton.classList.add('closeButton');
                     closeButton.style.color = boxFill;
 
@@ -284,22 +287,18 @@
                     const eventTitle = document.createElement('div');
                     eventTitle.id = 'eventTitle';
                     eventTitle.style.maxHeight = `${titleHeight}px`
-
-                    const eventCat = document.createElement('div');
-                    eventCat.id = 'eventCat';
-                    eventCat.style.maxHeight = `${catNameHeight}px`
+                    eventTitle.style.paddingTop = `${catNameHeight / 2}px`
+                    eventTitle.style.paddingBottom = `${catNameHeight / 2}px`
 
                     const eventDescription = document.createElement('div');
                     eventDescription.id = 'eventDescription';
                     eventDescription.style.maxHeight = `${descriptionHeight}px`
 
                     timeHeader.innerText = item.getTimeString();
-                    eventTitle.innerHTML = `<center><strong>${item.title}</strong></center>`;
-                    eventCat.innerText = `${item.category}`;
+                    eventTitle.innerHTML = `${item.category}: <strong>${item.title}</strong>`;
                     eventDescription.innerHTML = item.description;
                     
                     eventBox.appendChild(timeHeader);
-                    eventBox.appendChild(eventCat);
                     eventBox.appendChild(eventTitle);
                     eventBox.appendChild(eventDescription);
                     eventBox.appendChild(closeButton);
@@ -330,12 +329,12 @@
                         eventTriangle.style.top = `${aboveHeight - lineHeight}px`
 
                         triangleTop = 0
-                        triangleBottom = boxArrowLength + strokeWidth - 1
+                        triangleBottom = boxArrowLength + strokeWidth
                     } else {
                         eventTriangle.style.bottom = `${belowHeight - lineHeight}px`
 
                         triangleBottom = 0
-                        triangleTop = boxArrowLength + strokeWidth - 1
+                        triangleTop = boxArrowLength + strokeWidth 
                     }
                     
                     tri1 = `${boxWidth/2 + (dotWidth)/2},${triangleTop}`
@@ -351,7 +350,7 @@
                     arrowStroke.setAttribute('x2', boxArrowPadding)
                     arrowStroke.setAttribute('y2', triangleBottom)
 
-                    arrowStroke.setAttribute('stroke-width', strokeWidth-1)
+                    arrowStroke.setAttribute('stroke-width', strokeWidth)
                     arrowStroke.setAttribute('stroke', boxStroke)
 
                     
@@ -361,7 +360,7 @@
                     arrowStroke2.setAttribute('x2', boxWidth - boxArrowPadding)
                     arrowStroke2.setAttribute('y2', triangleBottom)
                     
-                    arrowStroke2.setAttribute('stroke-width', strokeWidth-1)
+                    arrowStroke2.setAttribute('stroke-width', strokeWidth)
                     arrowStroke2.setAttribute('stroke', boxStroke)
 
                     eventTriangle.appendChild(boxArrow)
@@ -434,7 +433,7 @@
 
         // Add time scale on the timeflow arrow
         const scalesLength = this.renderMax - this.renderMin;
-        this.scaleUnit = scalesLength / scaleNum;
+        // this.scaleUnit = scalesLength / scaleNum;
 
         let scales = getTimeScales.bind(this)();
         scales.forEach(time => {
@@ -495,7 +494,7 @@
 
         this.unitTime = undefined;
 
-        this.scaleUnit = undefined;
+        // this.scaleUnit = undefined;
 
     }
 
@@ -504,6 +503,7 @@
         addTimelineEvent: function(title, description, category, dateString){
 
             const time = new Date(dateString);
+
             const event = new TimelineEvent(title, description, category, time);
             if (!this.timeMin || time < this.timeMin){
                 this.timeMin = time;
@@ -563,7 +563,7 @@
             // Button to zoom in
             const zoomIn = document.createElement('button');
             zoomIn.classList.add('timelineZoom');
-            zoomIn.innerText = 'Zoom In';
+            zoomIn.innerText = 'Zoom in';
 
             zoomIn.addEventListener('click', e => {
 
@@ -581,7 +581,7 @@
             // Button to zoom out
             const zoomOut = document.createElement('button');
             zoomOut.classList.add('timelineZoom');
-            zoomOut.innerText = 'Zoom Out';
+            zoomOut.innerText = 'Zoom out';
 
             zoomOut.addEventListener('click', e => {
 
@@ -619,7 +619,7 @@
             
             // Button to move right in the timeline
             const next = document.createElement('button');
-            next.classList.add('timelineZoom');
+            next.classList.add('timelineMove');
             next.innerText = '>';
 
             next.addEventListener('click', e => {

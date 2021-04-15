@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="Timeline2D.css"/>
+        <script defer src="Timeline2D.js"></script>
+
+        <link rel="stylesheet" href="example.css"/>
+        <script defer src="use_cases.js"></script>
+    </head>
+    <body>
+
+        
+        <div class="menu">
+            
+            <div id="menuTitle">Menu</div>
+
+            <a href="example.html"><div>Home</div></a>
+
+            <a href="start.html"><div>Getting Started</div></a>
+                    
+            <a href="use_cases.html"><div id="current">Use Cases</div></a>
+
+            <a href="documentation.html"><div>Documentations</div></a>
+
+        </div>
+
+        <div id="main">
+            
+
+        <div id="examples" class="secondary">Timeline2D.js Use Cases</div>
+
+            <h2>Project Milestones</h2>
+
+            <p>
+                The first use case of Timeline2D is to mark project milestones. Each event would be an interim milestone, and each category would represent a project. For each event, the user can write more
+                information about the progress he/she has achieved or is planning to accomplish. An example timeline can be built as below:
+            </p>
+
+
+            <div id="milestone">
+
+            </div>
+
+
+            <code class="exampleCode" id="milestoneCode">
+                const milestone = new Timeline2D();
+
+                // Milestones for individual projects
+                milestone.addTimelineEvent(
+                    'Proposal',
+                    '',
+                    'Individual Project',
+                    '2021-02-27'
+                )
+
+                milestone.addTimelineEvent(
+                    'Alpha Releases',
+                    '',
+                    'Individual Project',
+                    '2021-03-23'
+                )
+
+                milestone.addTimelineEvent(
+                    'Final Submission',
+                    '',
+                    'Individual Project',
+                    '2021-04-17'
+                )
+
+                // Milestones for group projects
+                milestone.addTimelineEvent(
+                    'Proposal',
+                    '',
+                    'Group Project',
+                    '2021-02-06'
+                )
+
+                milestone.addTimelineEvent(
+                    'Phase 1 Releases',
+                    '',
+                    'Group Project',
+                    '2021-03-10'
+                )
+
+                milestone.addTimelineEvent(
+                    'Phase 2 Releases',
+                    '',
+                    'Group Project',
+                    '2021-04-09'
+                )
+
+                milestone.addTimelineEvent(
+                    'Final Releases',
+                    '',
+                    'Group Project',
+                    '2021-05-01'
+                )
+
+                milestone.render('#milestone', 1000)
+            </code>
+            <div class="viewCode" name="milestoneCode">View Code</div>
+
+            <p>
+                User can also use this type of timelines for product release schedules. A company may want to use a timeline to illustrate the progress of its product developments and what is plans to release in the future.
+            </p>
+
+
+
+            <h2>Life Trajectory Comparison</h2>
+
+            <p>
+                Another use case of the timeline can be related to news articles. If someone wants to write an article about famous people in IT industry, he/she might want to compare the life trajectory of these people in 
+                an illustrative figure. That is where Timeline2D comes into play. In this case, the event would be the major events happening in these people's life, and each category would represent each person.
+                Below is an example timeline comparing life trajectory of Steve Jobs, Bill Gates, and Elon Musk:
+            </p>
+            
+            <div id="people">
+            </div>
+            
+            
+            <code class="exampleCode" id="peopleCode">
+                const tl = new Timeline2D();
+
+                const jobs = 'Steve Jobs'
+                tl.addTimelineEvent('Birth', 'Born in San Francisco, California', jobs, '1955-02-24');
+                tl.addTimelineEvent('College', 'Enrolled at Reed College', jobs, '1972-9');
+                tl.addTimelineEvent('Drop out', 'Dropped out after one semester', jobs, '1973-1');
+                tl.addTimelineEvent('Founded Apple', 'Co-founded with Steve Wozniak and Ronald Wayne in Cupertino, California', jobs, '1976-4');
+                tl.addTimelineEvent('Death', 'Died at Palo Alto, California', jobs, '2011-10-5 15:00');
+
+                const gates = 'Bill Gates'
+                tl.addTimelineEvent('Birth', 'Born in Seattle, Washington.', gates, '1955-10-28')
+                tl.addTimelineEvent('College', 'Enrolled at Harvard in the autumn of 1973 with an SAT score of 1590', gates, '1973-9')
+                tl.addTimelineEvent('Drop out', 'Dropped out of Harvard after two years', gates, '1975')
+                tl.addTimelineEvent('Founded Microsoft', 'Co-founded with Paul Allen in Albuquerque, New Mexico', gates, '1975-4')
+                tl.addTimelineEvent('Leaving', 'Leaving day-to-day operations of Microsoft', gates, '2008');
+
+                const musk = 'Elon Musk'
+                tl.addTimelineEvent('Birth', 'Born in Pretoria, South Africa', musk, '1971-6-28')
+                tl.addTimelineEvent('College', 'Transferred to University of Pennsylvania',musk, '1992')
+                tl.addTimelineEvent('Graduate', 'Graduated with BS in economics and BA in physics', musk, '1997')
+                tl.addTimelineEvent('Founded SpaceX','Founded in Hawthorn, California', musk, '2002-5-6')
+                tl.addTimelineEvent('Founded Tesla','Founded in San Carlos, California',musk,'2003-7-1')
+                tl.addTimelineEvent('Founded Neuralink', 'Co-founded in San Francisco',musk, '2016-7')
+
+                tl.render('#people', 800);
+            </code>
+            <div class="viewCode" name="peopleCode">View Code</div>  
+            
+            <p>
+                If the author wants to write about the history of IT companies rather than celebrities, he/she could use similar approach to generate a timeline comparing the development of each IT companies. The author could
+                also compare the different development trajectory of different events, for example, the development of famous lawsuits and their social influences. Each category would represent a lawsuit and each event could be their 
+                impacts on society in different time.
+            </p>
+            
+
+            <h2>World History</h2>
+
+            <p>
+                Timeline2D can also be used for educational purposes. One of the common subject would be the World History. Normally in class, we study history in a single region first, and then move to another region. However, the history of human kind
+                progresses simultaneously, and sometimes there might be a connection between two entirely different civilizations, which would not be obvious if we only look at one region at a time. Hence, the 2D timeline would be very useful to figuratively 
+                show how hisotry has developed across the world at the same time. In this case, the event could be any historical event, and each category would represent a civilization or region. 
+            </p>
+
+            <p>
+                This use case is similar to the one about life trajectory comparison, but sometimes a historical event can be so complicated that the user wants to include more information than the message box in the timeline can contain.
+                In this case, the description added to each event is compatible with HTML contents; i.e., we can add a hyperlink inside the event description such that anyone wants to know more about the event can go to another web page that has 
+                more detail information. Below is an example comparing history of China and England during the period of 1347-1644:
+            </p>
+
+
+            <div id="history">
+
+            </div>
+
+            
+            <code class="exampleCode" id="historyCode">
+
+                const history = new Timeline2D();
+
+                const china = 'China';
+                
+                const hongwu = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Hongwu_Emperor">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Ming dynasty founded',
+                    'In 1368, Zhu Yuanzhang established the Ming dynasty in the city of Nanjing.'+
+                    ` Zhu Yuanzhang is the only emperor in the history of China who is a peasant before. See more about Zhu Yuanzhang at ${hongwu}`,
+                    china,
+                    '1368-01-23'
+                );
+                
+                
+                const yongle = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Yongle_Emperor">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'New Capital Beijing',
+                    'Emperor Zhu Di designated Beijing as the new capital.'+
+                    ` Zhu Di is the forth son of Zhu Yuanzhang and built the Forbidden city. See more about this emperor at ${yongle}`,
+                    china,
+                    '1420-10-28'
+                );
+                
+                
+                const tumu = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Tumu_Crisis">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Tumu Crisis',
+                    'Emperor Zhu Qizhen was captured by the Oirat leader Esen Tayisi during an invasion'+
+                    ` This event is know as the Crisis of Tumu Fortress. See more at ${tumu}`,
+                    china,
+                    '1449-09-08'
+                );
+                
+                
+                
+                const imjin = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Japanese_invasions_of_Korea_(1592%E2%80%931598)">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Imjin War',
+                    'A Japanese-Korean war where Ming dynasty was also involved.'+
+                    ` See more at ${imjin}`,
+                    china,
+                    '1592'
+                );
+                
+                
+                const end = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Chongzhen_Emperor">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Fallen of Ming dynasty',
+                    'After Beijing fell to the rebel army, the last emperor Zhu Youjian hanged himself on a tree outside of the Forbidden City.'+
+                    ` See more about the last Ming dynasty emperor at ${end}`,
+                    china,
+                    '1644-04-25'
+                );
+                
+                const england = 'England'
+                
+                
+                const black = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Black_Death_in_England">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Black Death',
+                    'First Black Death case arrived at Weymouth, Dorset.' +
+                    `See more about Black Death in England at ${black}`,
+                    england,
+                    '1348'
+                )
+                
+                
+                const lanc = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Hundred_Years%27_War_(1415%E2%80%931453)">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Lancastrian War',
+                    'King Henry V invaded Normandy, which marks the start of the final phase of Anglo-French Hundred Years War, as known as Lancastrian War' +
+                    `See more about the war at ${lanc}`,
+                    england,
+                    '1415'
+                )
+                
+                const rose = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Wars_of_the_Roses">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'The Wars of the Roses',
+                    'A series of civil wars to claim the throne.' +
+                    `See more about Wars of the Roses at ${rose}`,
+                    england,
+                    '1455'
+                )
+                
+                const vii = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Henry_VII_of_England">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Tudor Dynasty',
+                    'Henry VII began his reign, which marks the beginning of Tudor England.' +
+                    `See more about King Henry VII at ${vii}`,
+                    england,
+                    '1485'
+                )
+                
+                
+                const liz = '&lt;a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Elizabeth_I">this link&lt;/a>'
+                history.addTimelineEvent(
+                    'Elizabeth I',
+                    'Elizabeth I came to the throne. Her reign was often depicted as the golden age in England history.' +
+                    `See more about Queen Elizabeth I at ${liz}`,
+                    england,
+                    '1558'
+                )
+                
+                
+                history.addTimelineEvent(
+                    'End of Tudor',
+                    'Following the death of Queen Elizabeth I, the Tudor dynasty has come to the end.',
+                    england,
+                    '1603'
+                )
+                
+                
+                history.render('#history', 1000)
+            </code>
+
+            <div class="viewCode" name="historyCode">View Code</div>
+
+            <p>
+                
+            </p>
+    
+    </body>
+</html>

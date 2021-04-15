@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="Timeline2D.css"/>
+        <script defer src="Timeline2D.js"></script>
+
+        <link rel="stylesheet" href="example.css"/>
+        <script defer src="documentation.js"></script>
+    </head>
+
+    <body>
+        
+        <div class="menu">
+            
+            <div id="menuTitle">Menu</div>
+
+            <a href="example.html"><div>Home</div></a>
+
+            <a href="start.html"><div>Getting Started</div></a>
+                    
+            <a href="use_cases.html"><div>Use Cases</div></a>
+
+            <a href="documentation.html"><div id="current">Documentations</div></a>
+
+        </div>
+
+        <div id="main">
+            
+
+        <div id="documentation" class="secondary">Documentation & API</div>
+
+        <h2>Timeline2D Object Constructor</h2>
+
+        <code class="docTitle">Timeline2D()</code>
+
+        <p>
+            To generate a timeline with Timeline2D.js, you will need to first call the constructor to instantiate a Timeline2D. All methods and properties are attached to the object. 
+        </p>
+
+        <code>
+            let timeline = new Timeline2D();
+        </code>
+
+        <p>
+            The constructor takes in no arguments. The Timeline2D object serves as a data organizer that collects all the information about each event. Each timeline on the webpage corresponds to exactly
+            one Timeline2D object, but you can generate two timelines with the same object by calling <a href="#render"><code>.render()</code></a> method twice.
+        </p>
+
+
+        <h2>Properties</h2>
+
+        <p>
+            In the general case, users do not need to directly modify these properties since all of them can be manipulated through public API methods. Nonetheless, Timeline2D.js does not prevent users from accessing
+            these properties, and users should proceed with their own caution when changing properties directly.
+        </p>
+
+
+        <code class="docTitle" id="events">.events</code>
+
+        <p>
+            This is an array that stores the information about every event of the timeline. Each element in the array is a private object <code>TimelineEvent</code> which stores the relevent information of the event (i.e. 
+            time, title, description, category).
+        </p>
+
+        
+        <code class="docTitle" id="categories">.categories</code>
+
+        <p>
+            This is an array of strings that stores the categories of all events. Each string is a category of some events. The timeline will be wider if this property contains more categories.
+        </p>
+
+        
+        <code class="docTitle" id="timeMin">.timeMin</code>
+
+        <p>
+            This property is a Javascript <code>Date</code> object which represents the earliest time among all events in property <code>events</code>. The property is undefined when there is no event added. 
+            <code>.timeMin</code> is the absolute earliest time of all events. In other words, this property will only change when a new event earlier than <code>.timeMin</code> is added to the Timeline2D object.
+            It does not change when clicking the zoom in/out button.
+        </p>
+
+        
+        <code class="docTitle" id="timeMax">.timeMax</code>
+
+        <p>
+            This property is a Javascript <code>Date</code> object which represents the latest time among all events in property <code>events</code>. The property is undefined when there is no event added.
+            <code>.timeMax</code> is the absolute latest time of all events. In other words, this property will only change when a new event later than <code>.timeMax</code> is added to the Timeline2D object.
+            It does not change when clicking the zoom in/out button.
+        </p>
+
+        
+        <code class="docTitle" id="renderMin">.renderMin</code>
+
+        <p>
+            This property is a Javascript <code>Date</code> object which represents the earliest time of events that will be rendered onto the timeline. In other words, no events before the time <code>renderMin</code>
+            will be displayed even if it is in <code>events</code>. The property is undefined until method <a href="#render"><code>.render()</code></a> is called, and it will be initialized to <code>timeMin</code> at the beginning.
+             This property is mainly used to determine which event should be displayed when the zoom in/out button is clicked, so different from <code>timeMin</code>, this property changes when clicking on the zoom in/out button.
+        </p>
+        
+
+        <code class="docTitle" id="renderMax">.renderMax</code>
+
+        <p>
+            This property is a Javascript <code>Date</code> object which represents the latest time of events that will be rendered onto the timeline. In other words, no events after the time <code>renderMax</code>
+            will be displayed even if it is in <code>events</code>. The property is undefined until method <a href="#render"><code>.render()</code></a> is called, and it will be initialized to <code>timeMax</code> at the beginning. This property is mainly used to determine which event should be displayed when the zoom 
+            in/out button is clicked, so different from <code>timeMax</code>, this property changes when clicking on the zoom in/out button.
+        </p>
+
+        
+        <code class="docTitle" id="unitTime">.unitTime</code>
+
+        <p>
+            This property is a float number that determines how <code>renderMin</code> and <code>renderMax</code> change as the front end user clicks on the left/right button. In other words, this property decides how much the timeline is moved from one point to another.
+             The number is not static and it changes as the timeline zooms in or out. If <code>unitTime</code> is static, and let's say we will always change <code>renderMin</code> and <code>renderMax</code> by one month when we move the timeline (i.e. move the timeline one month forward or backward). When we zoom out 
+             and focus on a 5 year time period, each time we click on left/right button, we will only move the timeline by a very small step; while when we zoom in and focus on a 2 month period, we will move the timeline by a really large step. This is not a desirable feature, so Timeline2D will re-calculate <code>unitTime</code> 
+             every time the timeline zooms in/out in order to keep the visual movement of the timeline the same regardless of the time period length. 
+        </p>
+
+
+
+        <h2>API Methods</h2>
+
+        <code class="docTitle">.addTimelineEvent(title, description, category, dateString)</code>
+
+        <p>
+            This methods add the information of an event to the Timeline2D object. All arguments are requried and must be strings. <code>title</code>, 
+            <code>description</code>, and <code>category</code> represent the title, detail description, and category of the event, respectively. <code>dateString</code>
+            represent the date the event happens, and it should be formatted as 'YYYY-MM-DD'. The user can choose to only specify the date as 'YYYY' or 'YYYY-MM', and Timeline2D 
+            will convert it to the first day of the given year or month, respectively. The events do not need to be added in any order. Timeline2D object will display events based on their time regardless of the order
+            you added them. Below shows an code example:
+        </p>
+
+        <code>
+            let timeline = new Timeline2D();
+            timeline.addTimelineEvent('title', 'description', 'category 1', '2008');
+            timeline.addTimelineEvent('another title', 'description 2', 'category 2', '2077-04');
+            timeline.addTimelineEvent('title 3', 'description 3', 'category 1', '2021-02-01');
+        </code>
+
+        <p>
+            Internally, this method will create a private object <code>TimelineEvent</code> with the arguments and store the it inside the <a href="#events"><code>.events</code></a> property of the Timeline2D object. It will also 
+            add the category of this event to the <a href="#categories"><code>.categories</code></a> property and update property <a href="#timeMin"><code>.timeMin,.timeMax</code></a> accordingly.
+        </p>
+
+        <p>
+            Note: this method does not manipulate DOM objects or the webpage. It only stores the relevent data so that afterwards Timeline2D object can use it to generate the timeline (more detail on <code>.render()</code>).
+        </p>
+
+        
+        <code class="docTitle" id="render">.render(renderAt, length)</code>
+
+        <p>
+            This method requires two arguments: the first one <code>renderAt</code> should be a string compatible with <code>querySelector</code> (e.g. "#myid", ".myclass"). This argument indicate where the user
+            want to display the timeline. <code>render()</code> will find the HTML component through <code>renderAt</code> and generate all the required DOM objects to build a timeline inside that component. The second 
+            argument <code>length</code> is an integer representing how long the timeline should be in pixels. The length is absolute and does not scale with the webpage. Below is a code example:
+        </p>
+
+        
+        <code>
+            let timeline = new Timeline2D();
+            timeline.addTimelineEvent('title', 'description', 'category 1', '2008');
+            timeline.addTimelineEvent('another title', 'description 2', 'category 2', '2077-04');
+            timeline.addTimelineEvent('title 3', 'description 3', 'category 1', '2021-02-01');
+
+            timeline.render('#timeline', 1000);
+
+            // This event will NOT be displayed!
+            timeline.addTimelineEvent('title 4', 'I am not rendered', 'category 3', '2077-01-01');
+        </code>
+
+        <p>Below is the HTML page for this code example. The timeline will be displayed inside the <code>&lt;div&gt;</code> component.</p>
+        
+        <code>
+                &lt;body&gt;
+                    &lt;div id="timeline"&gt;
+                    &lt;/div&gt;
+                &lt;/body&gt;
+        </code>
+
+        <p>
+            The method will loop over all the events in the current <code>events</code> property and put them on the timeline. Therefore, it is important to add all the events you want to display before calling <code>render()</code>.
+        </p>
+
+
+        </div>
+        
+    </body>
+
+</html>

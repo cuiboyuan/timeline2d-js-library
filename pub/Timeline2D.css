@@ -20,34 +20,30 @@
 }
 .eventBox {
     position: absolute;
-    width: 200px;
-    padding: 10px;
-    border-radius: 10%;
+    max-width: 300px;
+    padding: 15px;
+    border-radius: 5%;
 }
 .eventBox div {
     overflow: auto;
     max-width: inherit;
 }
 
-/* .eventBox #eventTime {
+.eventBox #eventTime {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 15px;
+    font-style: italic;
 }
 
 .eventBox #eventTitle {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
-}
-
-.eventBox #eventCat {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 20px;
+    text-align: center;
 }
 
 .eventBox #eventDescription {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
-} */
+    font-family: sans-serif;
+    font-size: 15px;
+}
 
 .closeButton {
     position: absolute;
@@ -59,6 +55,7 @@
     background-color: red;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     cursor: default;
+    text-align: center;
 }
 .closeButton:hover {
     background-color: darkred;
@@ -77,14 +74,44 @@
 .timelinePanel {
     height: fit-content;
     width: fit-content;
-    background-color: lightgray;
+    
     position: relative;
     margin: auto;
     bottom: 0px;
 }
 
-.timelineZoom, .timelineMove {
+.timelineZoom{
+
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    border: 0px;
+    background-color: lightgray;
+    font-size: 20px;
+} 
+
+.timelineZoom:hover {
+    background-color:grey;
+}
+
+.timelineZoom:disabled {
+    opacity: 0.6;
+}
+
+
+
+
+.timelineMove {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    border: 0px;
+    background-color: lightgray;
+    font-size: 20px;
+}
+
+.timelineMove:hover {
+    background-color:grey;
+}
+
+.timelineMove:disabled {
+    opacity: 0.6;
 }
 
 .timelineWrapper {

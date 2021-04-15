@@ -51,6 +51,8 @@
     font-family: 'Courier New', Courier, monospace;
     font-style: italic;
     font-size: 25px;
+
+    color: black;
 }
 
 #nav {
@@ -66,9 +68,17 @@
     font-family: monospace;
     margin: 25px;
     border: 2px brown solid;
-    background-color: blanchedalmond;
+    background-color: wheat;
     padding: 5px;
     display: inline-block;
+}
+
+#nav a {
+    color: navy;
+}
+
+#nav a:visited {
+    color: navy;
 }
 
 #nav div:hover {
@@ -168,8 +178,111 @@ a:visited {
 }
 
 p {
-    font: 20px;
+    font-family: sans-serif;
+    font-size: 20px;
+    
+    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+code {
+    white-space: pre-wrap;
+    font-size: 18px;
+} 
+.viewCode {
+    background-color: whitesmoke;
+    border: 1px solid cadetblue;
     padding: 5px;
+    width: fit-content;
+    cursor: default;
+    margin-left: 30px;
+}
+
+.viewCode:hover {
+    transform: scale(1.1);
+}
+
+.exampleCode {
+    display: none;
+    white-space: pre-wrap;
+    font-size: 18px;
+}
+
+#historyCode {
+    display: none;
+}
+
+#peopleCode {
+    display: none;
+}
+
+#milestoneCode {
+    display: none;
+}
+
+.docTitle {
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+.menu {
+    height: 100%;
+    width: 250px;
+    background-color: blanchedalmond;
+    position:fixed;
+    display: block;
+    top: 0px;
+    left: 0px;
+}
+
+
+.menu a div {
+    font-size: 20px;
+    font-family: monospace;
+    margin: auto;
+    margin-top: 25px;
+    
+    background-color: blanchedalmond;
+    padding: 5px;
+    display: block;
+    width: 95%;
+    text-align: center;
+}
+
+.menu a {
+    color: navy;
+}
+
+.menu a:visited {
+    color: navy;
+}
+
+.menu a div:hover {
+    font-size: 22px;
+}
+
+.menu #menuTitle {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+    
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+#main {
+    margin-left: 300px;
+    width: 80%;
+}
+
+.menu a #current {
+    background-color: brown;
+}
+
+
+h2 {
+    font-family: sans-serif;
 }
 
 

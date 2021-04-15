@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="Timeline2D.css"/>
+        <script defer src="Timeline2D.js"></script>
+
+        <link rel="stylesheet" href="example.css"/>
+        <script defer src="start.js"></script>
+    </head>
+    <body>
+
+        <div class="menu">
+
+            <div id="menuTitle">Menu</div>
+            
+            <a href="example.html"><div>Home</div></a>
+
+            <a href="start.html"><div id="current">Getting Started</div></a>
+                    
+            <a href="use_cases.html"><div>Use Cases</div></a>
+
+            <a href="documentation.html"><div>Documentations</div></a>
+
+        </div>
+
+        <div id="main">
+            
+
+        <div id="start" class="secondary">Getting Started</div>
+
+        <h2>Load Timeline2D</h2>
+
+        <p>
+            Before doing anything, you will first need to load the library. There are two files need to be loaded:
+            <strong>Timeline2D.js</strong> (source code file) and <strong>Timeline2D.css</strong> (style sheet file).
+            
+        </p>
+
+        <p>    
+            Load Timeline2D library by putting the following code inside your html <code>&lt;head&gt;</code> tag (or other similar approaches):
+        </p>
+        <code>
+            &lt;link rel="stylesheet" href="Timeline2D.css"/&gt; 
+            &lt;script defer src="Timeline2D.js"&gt;&lt;/script&gt; 
+        </code>
+
+        <h2>Create your first 2D timeline</h2>
+
+        <p>
+            After you have loaded the library, you can create your first timeline by first running the following code:
+        </p>
+            <code> 
+                let timeline = new Timeline2D();
+            </code>
+
+        <p>
+            Right now, you won't see any timelines generated on you web page (don't worry!). Variable <code>timeline</code> is an object defined by Timeline2D.js which stores all the information needed to generate 
+            a timeline. The timeline is not generated until you call the function <code>render()</code> on the object <code>timeline</code> as shown below:
+        </p>
+            <code>
+                timeline.render('body', 1000);
+            </code>
+
+        <div id="first">
+
+        </div>
+
+        <p>
+
+            Now you should see a light blue arrow on you webpage (as shown above). The <code>render()</code> function takes in two arguments. The first one indicates where this timeline should be generated. In this case we indicate 
+            that we want the timeline to be generated inside the <code>&lt;body&gt;</code> tag. Timeline2D library uses the function <code>querySelector()</code> on the string to fetch the corresponding DOM element, so you can change 
+            it to other strings (e.g. ".class", "#id") to render the timeline in different places. The second argument represents how long the timeline should be (in pixels). Here we indicate that the time line should be 1000 
+            pixels long.
+
+        </p>
+
+        <p>
+            The current timeline does not do much as it has no timeline events added to it. So let's regenerate a timeline with some events in it.
+  
+
+        </p>
+            <code>
+                let timeline = new Timeline2D();
+                
+                timeline.addTimelineEvent('First Event', 'This is my first timeline event!!', 'my first category', '2021-04-12');
+                timeline.addTimelineEvent('Second Event', 'Here is another event', 'my first category', '2022-04-12');
+                timeline.addTimelineEvent('Third Event', 'Another one but in different category!', 'my second category', '2023-04-12');
+                
+                timeline.render('body', 1000);
+            </code>
+
+        <div id="second">
+
+        </div>
+
+        <p>
+            You should have generated a timeline similar to the one above. Try to click on the dots to see the a longer description of the events. Different event category
+             is distinguished by the color of the dot and its distance from the timeflow arrow. Events of the same category will have the same color and same distance away from the timeflow.
+             You can also click on the zoom in/out button and the left/right button to focus on different time periods.
+        </p>
+
+        <p>
+            Here we have used function <code>addTimelineEvent()</code> on the object. It takes in 4 arguments. The first one indicates the title of the event. The second
+            one is a longer description of the event. The third one indicates which category this event belongs to. The forth on indicates when does the event happen. The 
+            time format is YYYY-MM-DD. You need to add all events you want to display before you call the <code>render()</code> function. 
+        </p>
+
+        <p>
+            Now you have created your first 2D timeline! See more about the library on <a href="documentation.html">Documentation & API</a>
+
+        </p>
+
+        </div>
+    </body>
+</html>
