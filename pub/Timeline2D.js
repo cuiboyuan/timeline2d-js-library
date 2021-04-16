@@ -87,7 +87,7 @@
         };
         
         if (diff_in_month <= scaleNum){
-            return `${toMonth(time.getMonth())}. ${time.getDate()},${time.getFullYear()}`
+            return `${toMonth(time.getMonth())}. ${time.getDate()}, ${time.getFullYear()}`
         } else if (diff_in_month <= scaleNum * 12){
             return `${toMonth(time.getMonth())}. ${time.getFullYear()}`
         } else {
@@ -235,7 +235,7 @@
                 // A hidden event title above (or below) the dot which only become visible when the mouse hovers
                 // over the dot
                 const title = document.createElement('div')
-                title.innerText = `${getPrimaryTime.bind(this)(item.time)}, ${item.title}`
+                title.innerText = `${getPrimaryTime.bind(this)(item.time)} | ${item.title}`
                 title.classList.add('eventTitle')
 
                 dot.addEventListener('mouseenter', (e) => {
