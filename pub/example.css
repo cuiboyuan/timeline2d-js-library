@@ -291,6 +291,7 @@ pre {
     background-color: whitesmoke;
     overflow: auto;
     max-height: 500px;
+    width: 90%;
 }
 
 
