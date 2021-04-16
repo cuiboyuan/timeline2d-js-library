@@ -131,7 +131,7 @@ history.addTimelineEvent(
 const tumu = '<a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Tumu_Crisis">this link</a>'
 history.addTimelineEvent(
     'Tumu Crisis',
-    'Emperor Zhu Qizhen was captured by the Oirat leader Esen Tayisi during an invasion'+
+    'Emperor Zhu Qizhen was captured by the Oirat leader Esen Tayisi during an invasion.'+
     ` This event is know as the Crisis of Tumu Fortress. See more at ${tumu}`,
     china,
     '1449-09-08'
@@ -165,7 +165,7 @@ const black = '<a target="_blank" rel="noopener noreferrer" href="https://en.wik
 history.addTimelineEvent(
     'Black Death',
     'First Black Death case arrived at Weymouth, Dorset.' +
-    `See more about Black Death in England at ${black}`,
+    ` See more about Black Death in England at ${black}`,
     england,
     '1348'
 )
@@ -174,8 +174,8 @@ history.addTimelineEvent(
 const lanc = '<a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Hundred_Years%27_War_(1415%E2%80%931453)">this link</a>'
 history.addTimelineEvent(
     'Lancastrian War',
-    'King Henry V invaded Normandy, which marks the start of the final phase of Anglo-French Hundred Years War, as known as Lancastrian War' +
-    `See more about the war at ${lanc}`,
+    'King Henry V invaded Normandy, which marks the start of the final phase of Anglo-French Hundred Years War, also known as Lancastrian War.' +
+    ` See more about the war at ${lanc}`,
     england,
     '1415'
 )
@@ -184,7 +184,7 @@ const rose = '<a target="_blank" rel="noopener noreferrer" href="https://en.wiki
 history.addTimelineEvent(
     'The Wars of the Roses',
     'A series of civil wars to claim the throne.' +
-    `See more about Wars of the Roses at ${rose}`,
+    ` See more about Wars of the Roses at ${rose}`,
     england,
     '1455'
 )
@@ -193,7 +193,7 @@ const vii = '<a target="_blank" rel="noopener noreferrer" href="https://en.wikip
 history.addTimelineEvent(
     'Tudor Dynasty',
     'Henry VII began his reign, which marks the beginning of Tudor England.' +
-    `See more about King Henry VII at ${vii}`,
+    ` See more about King Henry VII at ${vii}`,
     england,
     '1485'
 )
@@ -203,7 +203,7 @@ const liz = '<a target="_blank" rel="noopener noreferrer" href="https://en.wikip
 history.addTimelineEvent(
     'Elizabeth I',
     'Elizabeth I came to the throne. Her reign was often depicted as the golden age in England history.' +
-    `See more about Queen Elizabeth I at ${liz}`,
+    ` See more about Queen Elizabeth I at ${liz}`,
     england,
     '1558'
 )
