@@ -2,11 +2,7 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="Timeline2D.css"/>
-        <script defer src="Timeline2D.js"></script>
-
         <link rel="stylesheet" href="example.css"/>
-        <script defer src="start.js"></script>
     </head>
     <body>
 
@@ -68,7 +64,7 @@
 
         <p>
 
-            Now you should see a light blue arrow on you webpage (as shown above). The <code>render()</code> function takes in two arguments. The first one indicates where this timeline should be generated. In this case we indicate 
+            Now you should see a light blue timeline on you webpage. The <code>render()</code> function takes in two arguments. The first one indicates where this timeline should be generated. In this case we indicate 
             that we want the timeline to be generated inside the <code>&lt;body&gt;</code> tag. Timeline2D library uses the function <code>querySelector()</code> on the string to fetch the corresponding DOM element, so you can change 
             it to other strings (e.g. ".class", "#id") to render the timeline in different places. The second argument represents how long the timeline should be (in pixels). Here we indicate that the time line should be 1000 
             pixels long.
@@ -77,8 +73,6 @@
 
         <p>
             The current timeline does not do much as it has no timeline events added to it. So let's regenerate a timeline with some events in it.
-  
-
         </p>
             <code>
                 let timeline = new Timeline2D();
@@ -95,7 +89,7 @@
         </div>
 
         <p>
-            You should have generated a timeline similar to the one above. Try to click on the dots to see the a longer description of the events. Different event category
+            You should have generated a timeline with interactive events on it. Try to click on the dots to see the a longer description of the events. Different event category
              is distinguished by the color of the dot and its distance from the timeflow arrow. Events of the same category will have the same color and same distance away from the timeflow.
              You can also click on the zoom in/out button and the left/right button to focus on different time periods.
         </p>
@@ -107,8 +101,11 @@
         </p>
 
         <p>
-            Now you have created your first 2D timeline! See more about the library on <a href="documentation.html">Documentation & API</a>
+            Now you have created your first 2D timeline! See more about the library on <a href="documentation.html" id="fullDoc">Documentation & API</a>
+        </p>
 
+        <p>
+            
         </p>
 
         </div>
