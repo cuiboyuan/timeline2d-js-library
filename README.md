@@ -51,5 +51,5 @@ Here we have used function addTimelineEvent() on the object. It takes in 4 argum
 
 Now you have created your first 2D timeline! See more about the library on [Documentation & API](https://still-tundra-45710.herokuapp.com/documentation.html).
 
-## FUll Documentation Link
+## Full Documentation Link
 https://still-tundra-45710.herokuapp.com/documentation.html
