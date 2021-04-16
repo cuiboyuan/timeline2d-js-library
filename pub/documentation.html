@@ -38,9 +38,11 @@
             To generate a timeline with Timeline2D.js, you will need to first call the constructor to instantiate a Timeline2D. All methods and properties are attached to the object. 
         </p>
 
-        <code>
-            let timeline = new Timeline2D();
-        </code>
+        <pre>
+            <code>
+                let timeline = new Timeline2D();
+            </code>
+        </pre>
 
         <p>
             The constructor takes in no arguments. The Timeline2D object serves as a data organizer that collects all the information about each event. Each timeline on the webpage corresponds to exactly
@@ -130,12 +132,14 @@
             you added them. Below shows an code example:
         </p>
 
+        <pre>
         <code>
             let timeline = new Timeline2D();
             timeline.addTimelineEvent('title', 'description', 'category 1', '2008');
             timeline.addTimelineEvent('another title', 'description 2', 'category 2', '2077-04');
             timeline.addTimelineEvent('title 3', 'description 3', 'category 1', '2021-02-01');
         </code>
+        </pre>
 
         <p>
             Internally, this method will create a private object <code>TimelineEvent</code> with the arguments and store the it inside the <a href="#events"><code>.events</code></a> property of the Timeline2D object. It will also 
@@ -156,6 +160,7 @@
         </p>
 
         
+        <pre>
         <code>
             let timeline = new Timeline2D();
             timeline.addTimelineEvent('title', 'description', 'category 1', '2008');
@@ -167,22 +172,26 @@
             // This event will NOT be displayed!
             timeline.addTimelineEvent('title 4', 'I am not rendered', 'category 3', '2077-01-01');
         </code>
+        </pre>
 
         <p>Below is the HTML page for this code example. The timeline will be displayed inside the <code>&lt;div&gt;</code> component.</p>
         
+        
+        <pre>
         <code>
                 &lt;body&gt;
                     &lt;div id="timeline"&gt;
                     &lt;/div&gt;
                 &lt;/body&gt;
         </code>
+        </pre>
 
         <p>
             The method will loop over all the events in the current <code>events</code> property and put them on the timeline. Therefore, it is important to add all the events you want to display before calling <code>render()</code>.
         </p>
 
         <p>
-            
+
         </p>
 
 

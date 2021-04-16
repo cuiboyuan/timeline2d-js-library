@@ -36,19 +36,25 @@
         <p>    
             Load Timeline2D library by putting the following code inside your html <code>&lt;head&gt;</code> tag (or other similar approaches):
         </p>
+        
+        <pre>
         <code>
             &lt;link rel="stylesheet" href="https://still-tundra-45710.herokuapp.com/Timeline2D.css"/&gt; 
             &lt;script defer src="https://still-tundra-45710.herokuapp.com/Timeline2D.js"&gt;&lt;/script&gt; 
         </code>
+        </pre>
 
         <h2>Create your first 2D timeline</h2>
 
         <p>
             After you have loaded the library, you can create your first timeline by first running the following code:
         </p>
+        
+        <pre>
             <code> 
                 let timeline = new Timeline2D();
             </code>
+        </pre>
 
         <p>
             Right now, you won't see any timelines generated on you web page (don't worry!). Variable <code>timeline</code> is an object defined by Timeline2D.js which stores all the information needed to generate 
@@ -74,6 +80,8 @@
         <p>
             The current timeline does not do much as it has no timeline events added to it. So let's regenerate a timeline with some events in it.
         </p>
+        
+        <pre>
             <code>
                 let timeline = new Timeline2D();
                 
@@ -83,6 +91,7 @@
                 
                 timeline.render('body', 1000);
             </code>
+        </pre>
 
         <div id="second">
 
@@ -105,7 +114,7 @@
         </p>
 
         <p>
-            
+
         </p>
 
         </div>

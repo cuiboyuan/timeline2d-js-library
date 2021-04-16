@@ -204,8 +204,6 @@ code {
 }
 
 .exampleCode {
-    display: none;
-    white-space: pre-wrap;
     font-size: 18px;
 }
 
@@ -287,6 +285,12 @@ h2 {
 
 #fullDoc{
     text-decoration: underline;
+}
+
+pre {
+    background-color: whitesmoke;
+    overflow: auto;
+    max-height: 500px;
 }
 
 
