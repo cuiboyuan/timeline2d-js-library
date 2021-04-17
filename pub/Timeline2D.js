@@ -66,7 +66,6 @@
         },
 
         getTimeString: function() {
-            // return this.time.toLocaleString();
             return this.time.toDateString();
         },
     }
@@ -190,6 +189,7 @@
 
         timeline.style.height = `${aboveHeight + belowHeight + flowWidth}px`
 
+        // Render an empty timeline if no events is provided
         if (!renderMin || !renderMax) {
             
             const timeflow = createTimeflowDOM.bind(this)(length, aboveHeight, belowHeight)
@@ -313,7 +313,7 @@
                         eventBox.style.bottom = `${belowHeight - lineHeight + boxArrowLength}px`
                     }
 
-                    // The triangle arrow above or below eventbox
+                    // Drawing the event box: The triangle above or below eventbox
                     const eventTriangle = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                     eventTriangle.classList.add('overlay')
                     eventTriangle.classList.add('eventTriangle')
@@ -431,9 +431,8 @@
             }
         );
 
-        // Add time scale on the timeflow arrow
+        // Add time scale on the timeflow
         const scalesLength = this.renderMax - this.renderMin;
-        // this.scaleUnit = scalesLength / scaleNum;
 
         let scales = getTimeScales.bind(this)();
         scales.forEach(time => {
@@ -475,6 +474,7 @@
             timeline.appendChild(scale);
         });
 
+        // Create the timeflow arrow
         const timeflow = createTimeflowDOM.bind(this)(length, aboveHeight, belowHeight)
 
         // Put timeflow arrow into the timeline
@@ -493,8 +493,6 @@
         this.renderMin = undefined;
 
         this.unitTime = undefined;
-
-        // this.scaleUnit = undefined;
 
     }
 
@@ -653,11 +651,6 @@
             where.appendChild(wrapper);
         }
     };
-
-
-
-
-
 
 
 
